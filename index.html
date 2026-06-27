@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Kurss — praktiska apmācība modernam darbam</title>
+  <meta name="description" content="Moderns vienas lapas kurss par mākslīgo intelektu: praktiski rīki, ikdienas scenāriji, produktivitāte, satura veidošana un biznesa pielietojums." />
+  <meta property="og:title" content="AI Kurss — praktiska apmācība modernam darbam" />
+  <meta property="og:description" content="Apgūsti AI prasmes bez liekas teorijas. Praktisks kurss ar šabloniem, piemēriem un gataviem darba scenārijiem." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f4efe7" />
+  <style>
+    :root{
+      --bg:#f6f1ea;
+      --paper:#fffaf3;
+      --ink:#17120f;
+      --muted:#695e55;
+      --line:rgba(23,18,15,.12);
+      --accent:#d78543;
+      --accent-dark:#9d5928;
+      --green:#466d4f;
+      --blue:#324b6b;
+      --cream:#fff7e8;
+      --shadow:0 24px 70px rgba(39,25,12,.12);
+      --radius:24px;
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(215,133,67,.24), transparent 34rem),
+        radial-gradient(circle at 80% 10%, rgba(70,109,79,.18), transparent 26rem),
+        linear-gradient(180deg,#fbf6ee 0%, var(--bg) 42%, #f1e7da 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,select,textarea{font:inherit}
+    .wrap{width:min(var(--max), calc(100% - 40px)); margin:0 auto}
+
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(18px);
+      background:rgba(246,241,234,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      min-height:76px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.04em;font-size:22px}
+    .brand-mark{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      color:#fff;background:linear-gradient(135deg,var(--ink),var(--accent));
+      box-shadow:0 14px 34px rgba(157,89,40,.24);
+      font-weight:900;
+    }
+    .navlinks{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:700;font-size:14px}
+    .navlinks a{padding:10px 12px;border-radius:999px}
+    .navlinks a:hover{background:rgba(255,255,255,.72);color:var(--ink)}
+
+    .btn{
+      border:0; cursor:pointer; border-radius:999px;
+      padding:14px 20px; font-weight:850;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      transition:.2s transform,.2s box-shadow,.2s background;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--ink);color:#fff;box-shadow:0 14px 34px rgba(23,18,15,.20)}
+    .btn-primary:hover{box-shadow:0 18px 48px rgba(23,18,15,.28)}
+    .btn-accent{background:var(--accent);color:#fff;box-shadow:0 14px 34px rgba(215,133,67,.28)}
+    .btn-soft{background:rgba(255,255,255,.72);border:1px solid var(--line);color:var(--ink)}
+    .btn-block{width:100%}
+
+    .hero{padding:74px 0 44px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+    .kicker{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:9px 14px;border:1px solid rgba(215,133,67,.28);background:rgba(255,250,243,.74);
+      border-radius:999px;color:var(--accent-dark);font-weight:850;font-size:14px;
+      box-shadow:0 8px 30px rgba(39,25,12,.06);
+    }
+    .pulse{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 8px rgba(70,109,79,.12)}
+    h1{font-size:clamp(46px,7.3vw,94px);line-height:.92;letter-spacing:-.075em;margin:22px 0 22px;max-width:880px}
+    .lead{font-size:clamp(18px,2.1vw,23px);line-height:1.55;color:var(--muted);max-width:690px;margin:0 0 28px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 26px}
+    .micro{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:14px;font-weight:700}
+    .micro span{display:flex;align-items:center;gap:8px}
+    .tick{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:rgba(70,109,79,.14);color:var(--green);font-size:12px;font-weight:900}
+
+    .wp-card{
+      position:relative;background:rgba(255,250,243,.83);border:1px solid rgba(255,255,255,.68);
+      border-radius:calc(var(--radius) + 10px);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .wp-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.72),transparent 44%);pointer-events:none}
+    .course-preview{padding:22px;transform:rotate(1.2deg)}
+    .browser-bar{height:44px;border-radius:20px 20px 0 0;background:#2b211b;display:flex;align-items:center;gap:7px;padding:0 16px}
+    .dot{width:10px;height:10px;border-radius:50%;background:#e7cab0;opacity:.9}
+    .preview-body{background:linear-gradient(180deg,#fffaf3,#f4eadc);border:1px solid var(--line);border-top:0;border-radius:0 0 24px 24px;padding:24px}
+    .preview-hero{border-radius:22px;padding:24px;background:linear-gradient(135deg,#17120f,#5a3826);color:#fff;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+    .preview-hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-80px;top:-70px;background:rgba(215,133,67,.48)}
+    .preview-title{font-size:34px;line-height:.95;letter-spacing:-.06em;font-weight:900;max-width:340px;position:relative;z-index:1}
+    .preview-pill{position:relative;z-index:1;display:inline-flex;align-self:flex-start;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-size:13px;font-weight:800}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .stat{padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+    .stat b{font-size:23px;display:block;letter-spacing:-.04em}.stat span{font-size:12px;color:var(--muted);font-weight:750}
+
+    .section{padding:72px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:26px;margin-bottom:26px}
+    .eyebrow{color:var(--accent-dark);font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:12px;margin-bottom:10px}
+    h2{font-size:clamp(34px,4.6vw,58px);line-height:.98;letter-spacing:-.06em;margin:0;max-width:720px}
+    .section-note{color:var(--muted);font-size:17px;line-height:1.55;max-width:440px;margin:0}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature{background:rgba(255,250,243,.72);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 14px 44px rgba(39,25,12,.06)}
+    .icon{width:46px;height:46px;border-radius:16px;background:rgba(215,133,67,.14);display:grid;place-items:center;font-size:22px;margin-bottom:18px}
+    .feature h3,.module h3,.price h3{margin:0 0 10px;font-size:22px;letter-spacing:-.035em}
+    .feature p,.module p,.price p{margin:0;color:var(--muted);line-height:1.55}
+
+    .story{background:var(--ink);color:#fff;border-radius:36px;padding:44px;display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;box-shadow:0 32px 80px rgba(23,18,15,.26);overflow:hidden;position:relative}
+    .story:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-120px;bottom:-140px;background:rgba(215,133,67,.24)}
+    .story .eyebrow{color:#f0b478}.story h2{color:#fff}.story p{color:rgba(255,255,255,.76);font-size:18px;line-height:1.75;margin:0;position:relative;z-index:1}
+    .story-list{display:grid;gap:12px;position:relative;z-index:1}
+    .story-item{padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;gap:12px;align-items:flex-start}
+    .story-number{width:30px;height:30px;border-radius:12px;background:rgba(215,133,67,.24);display:grid;place-items:center;color:#ffd4ad;font-weight:900;flex:0 0 auto}
+
+    .modules{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .module{background:rgba(255,250,243,.8);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden}
+    .module:before{content:attr(data-step);position:absolute;right:18px;top:12px;color:rgba(23,18,15,.08);font-size:58px;font-weight:950;letter-spacing:-.08em}
+    .module ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:10px;color:var(--muted);font-weight:650}
+    .module li{display:flex;gap:9px;align-items:flex-start}.module li:before{content:"✓";color:var(--green);font-weight:950}
+
+    .pricing{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:stretch}
+    .price{padding:28px;border-radius:30px;background:rgba(255,250,243,.82);border:1px solid var(--line);box-shadow:0 18px 54px rgba(39,25,12,.08);position:relative;display:flex;flex-direction:column}
+    .price.highlight{background:linear-gradient(180deg,#fffaf3,#ffe7ce);border-color:rgba(215,133,67,.32);transform:translateY(-8px)}
+    .tag{position:absolute;right:20px;top:20px;background:var(--green);color:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900}
+    .amount{font-size:58px;letter-spacing:-.07em;font-weight:950;margin:12px 0 6px}.amount small{font-size:18px;color:var(--muted);letter-spacing:0;font-weight:800}
+    .price ul{list-style:none;margin:20px 0 24px;padding:0;display:grid;gap:12px;color:var(--muted);font-weight:700}.price li{display:flex;gap:10px}.price li:before{content:"●";font-size:10px;line-height:24px;color:var(--accent)}
+    .push{margin-top:auto}
+
+    .order-box{display:grid;grid-template-columns:.82fr 1.18fr;gap:18px;align-items:start}
+    .summary{background:linear-gradient(135deg,#17120f,#443022);color:#fff;border-radius:30px;padding:28px;box-shadow:0 24px 64px rgba(23,18,15,.22);position:sticky;top:96px}
+    .summary h3{font-size:28px;letter-spacing:-.04em;margin:0 0 12px}.summary p{color:rgba(255,255,255,.74);line-height:1.6;margin:0 0 22px}
+    .summary-line{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.12);font-weight:800}.summary-line span{color:rgba(255,255,255,.68);font-weight:700}.summary-total{font-size:34px;letter-spacing:-.05em;color:#ffd3a9}
+    form{background:rgba(255,250,243,.84);border:1px solid var(--line);border-radius:30px;padding:28px;box-shadow:0 18px 54px rgba(39,25,12,.08)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+    label{font-weight:850;font-size:13px;color:#3f352d}input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px 14px;color:var(--ink);outline:none}textarea{min-height:116px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:rgba(215,133,67,.7);box-shadow:0 0 0 4px rgba(215,133,67,.12)}
+    .fine{font-size:13px;color:var(--muted);line-height:1.55;margin:14px 0 0}
+
+    .faq{display:grid;gap:12px}.faq details{background:rgba(255,250,243,.78);border:1px solid var(--line);border-radius:22px;padding:18px 20px}.faq summary{cursor:pointer;font-weight:900;font-size:18px}.faq p{color:var(--muted);line-height:1.6;margin:14px 0 0}
+    .footer{padding:42px 0 54px;color:var(--muted);font-size:14px}.footer-inner{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:22px;flex-wrap:wrap}
+
+    .float-cta{display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:60}.float-cta .btn{box-shadow:0 18px 50px rgba(23,18,15,.3)}
+
+    @media (max-width:920px){
+      .navlinks{display:none}.hero{padding-top:42px}.hero-grid,.story,.order-box{grid-template-columns:1fr}.course-preview{transform:none}.grid-3,.pricing{grid-template-columns:1fr}.modules{grid-template-columns:1fr}.section-head{display:block}.section-note{margin-top:14px}.summary{position:relative;top:auto}.float-cta{display:block}.footer{padding-bottom:92px}
+    }
+    @media (max-width:560px){
+      .wrap{width:min(100% - 26px,var(--max))}.brand span{font-size:19px}.hero-actions .btn{width:100%}h1{font-size:48px}.story{padding:28px;border-radius:28px}.form-grid{grid-template-columns:1fr}.price.highlight{transform:none}.stat-row{grid-template-columns:1fr}.preview-body{padding:14px}.preview-title{font-size:28px}.section{padding:54px 0}.nav{min-height:66px}.btn{padding:13px 16px}.amount{font-size:48px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="AI Kurss sākums"><span class="brand-mark">AI</span><span>AI Kurss</span></a>
+      <nav class="navlinks" aria-label="Galvenā navigācija">
+        <a href="#about">Par kursu</a>
+        <a href="#program">Programma</a>
+        <a href="#price">Cena</a>
+        <a href="#order">Pirkums</a>
+      </nav>
+      <a class="btn btn-primary" href="#order">Pieteikties</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="kicker"><span class="pulse"></span> Praktisks online kurss latviešu valodā</div>
+          <h1>Apgūsti AI prasmes, kas reāli palīdz darbā.</h1>
+          <p class="lead">Nevis garlaicīga teorija, bet skaidri scenāriji: kā rakstīt labāk, ātrāk analizēt informāciju, veidot saturu, automatizēt ikdienas uzdevumus un izmantot AI biznesā bez oficiālu zīmolu piesaukšanas.</p>
+          <div class="hero-actions">
+            <a class="btn btn-accent" href="#price">Skatīt kursa pakas</a>
+            <a class="btn btn-soft" href="#program">Kas ir iekšā?</a>
+          </div>
+          <div class="micro">
+            <span><i class="tick">✓</i> 14 dienu piekļuve startam</span>
+            <span><i class="tick">✓</i> Šabloni un piemēri</span>
+            <span><i class="tick">✓</i> Bez tehniskas sarežģītības</span>
+          </div>
+        </div>
+
+        <aside class="wp-card course-preview" aria-label="Kursa priekšskatījums">
+          <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="preview-body">
+            <div class="preview-hero">
+              <span class="preview-pill">Jauna prasme · moderns darbs</span>
+              <div class="preview-title">AI kā tavs ikdienas asistents</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><b>6</b><span>praktiski moduļi</span></div>
+              <div class="stat"><b>40+</b><span>gatavi prompti</span></div>
+              <div class="stat"><b>2h</b><span>ātrs starts</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Kursa ideja</div>
+            <h2>Vienkāršs veids, kā saprast AI un sākt to lietot uzreiz.</h2>
+          </div>
+          <p class="section-note">Šis kurss ir veidots kā moderna WordPress stila pārdošanas lapa: tīrs dizains, skaidrs piedāvājums, pirkuma forma un saturs, ko var ātri palaist Netlify.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature">
+            <div class="icon">✍️</div>
+            <h3>Teksti un idejas</h3>
+            <p>Uzzināsi, kā ātri sagatavot reklāmas tekstus, e-pastus, aprakstus, skriptus un satura idejas.</p>
+          </article>
+          <article class="feature">
+            <div class="icon">📊</div>
+            <h3>Analīze un struktūra</h3>
+            <p>Mācīsies sakārtot lielu informācijas apjomu, izvilkt galveno un pieņemt lēmumus ātrāk.</p>
+          </article>
+          <article class="feature">
+            <div class="icon">⚙️</div>
+            <h3>Procesi biznesam</h3>
+            <p>Saņemsi praktiskus piemērus pārdošanai, klientu komunikācijai, produktu idejām un ikdienas rutīnai.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap story">
+        <div>
+          <div class="eyebrow">Stāsts</div>
+          <h2>No haosa līdz skaidrai sistēmai.</h2>
+        </div>
+        <div class="story-list">
+          <div class="story-item"><span class="story-number">1</span><p>Sākumā AI šķiet kā tukšs čats: tu kaut ko ieraksti, bet rezultāts bieži ir vidējs.</p></div>
+          <div class="story-item"><span class="story-number">2</span><p>Atšķirība sākas tad, kad tu māki dot kontekstu, definēt uzdevumu, stilu, mērķi un pārbaudes kritērijus.</p></div>
+          <div class="story-item"><span class="story-number">3</span><p>Kursā tu paņem gatavu sistēmu un pielāgo to sev: darbam, biznesam, mācībām, kontentam vai pārdošanai.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="program">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Programma</div>
+            <h2>Kas būs kursā</h2>
+          </div>
+          <p class="section-note">Moduļi ir īsi, praktiski un taisīti tā, lai pēc katras nodarbības tu jau vari kaut ko izmantot.</p>
+        </div>
+
+        <div class="modules">
+          <article class="module" data-step="01">
+            <h3>AI pamati bez sarežģītiem terminiem</h3>
+            <p>Kā domāt par AI kā instrumentu, nevis mistisku tehnoloģiju.</p>
+            <ul><li>Kas ir labs uzdevums</li><li>Kā nedabūt tukšu, vispārīgu atbildi</li><li>Kā pārbaudīt rezultātu</li></ul>
+          </article>
+          <article class="module" data-step="02">
+            <h3>Promptu sistēma</h3>
+            <p>Vienkārša formula, pēc kuras AI dod daudz labāku rezultātu.</p>
+            <ul><li>Loma, mērķis, konteksts</li><li>Stils un formāts</li><li>Korekcijas un iterācijas</li></ul>
+          </article>
+          <article class="module" data-step="03">
+            <h3>Saturs un pārdošana</h3>
+            <p>Kā veidot tekstus, kas izklausās dzīvi, nevis kā robots.</p>
+            <ul><li>Reklāmas idejas</li><li>Landing lapu teksti</li><li>Īsi DM un e-pasti</li></ul>
+          </article>
+          <article class="module" data-step="04">
+            <h3>Biznesa pielietojums</h3>
+            <p>Scenāriji uzņēmējiem, freelanceriem un komandām.</p>
+            <ul><li>Klientu jautājumi</li><li>Produkta apraksti</li><li>Procesu sakārtošana</li></ul>
+          </article>
+          <article class="module" data-step="05">
+            <h3>Analīze un lēmumi</h3>
+            <p>Kā apkopot tekstus, salīdzināt variantus un izvilkt galveno.</p>
+            <ul><li>Kopsavilkumi</li><li>Plusi/mīnusi</li><li>Rīcības plāni</li></ul>
+          </article>
+          <article class="module" data-step="06">
+            <h3>Gatavie šabloni</h3>
+            <p>Promptu bibliotēka, ko vari kopēt un lietot savām vajadzībām.</p>
+            <ul><li>Darbs</li><li>Mācības</li><li>Pārdošana</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="price">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Cena</div>
+            <h2>Izvēlies piekļuvi kursam</h2>
+          </div>
+          <p class="section-note">Pogas aizved uz pirkuma formu. Pēc deploy uz Netlify forma var vākt pieteikumus bez backend.</p>
+        </div>
+
+        <div class="pricing">
+          <article class="price">
+            <h3>Starta paka</h3>
+            <p>Pamata kurss tiem, kas grib ātri saprast AI un sākt lietot ikdienā.</p>
+            <div class="amount">€49 <small>/ vienreiz</small></div>
+            <ul><li>6 praktiski moduļi</li><li>Promptu šabloni</li><li>Piekļuve materiāliem</li><li>Atjauninājumi 30 dienas</li></ul>
+            <div class="push"><button class="btn btn-soft btn-block choose-plan" data-plan="Starta paka" data-price="49">Pirkt Starta paku</button></div>
+          </article>
+          <article class="price highlight">
+            <span class="tag">Populārākā</span>
+            <h3>Pro paka</h3>
+            <p>Pilnā versija ar papildus biznesa piemēriem un personīgākiem šabloniem.</p>
+            <div class="amount">€89 <small>/ vienreiz</small></div>
+            <ul><li>Viss no Starta pakas</li><li>Biznesa promptu bibliotēka</li><li>Landing lapu un reklāmu piemēri</li><li>Prioritāra piekļuve jaunām lekcijām</li></ul>
+            <div class="push"><button class="btn btn-primary btn-block choose-plan" data-plan="Pro paka" data-price="89">Pirkt Pro paku</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="order">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Pirkums</div>
+            <h2>Noformē kursa pieteikumu</h2>
+          </div>
+          <p class="section-note">Šī ir vienkārša pirkuma/pieteikuma forma. Reālam kartes maksājumam vēlāk var pieslēgt maksājumu saiti.</p>
+        </div>
+
+        <div class="order-box">
+          <aside class="summary">
+            <h3>Tavs pasūtījums</h3>
+            <p>Izvēlies kursa paku, aizpildi kontaktus un saņemsi instrukciju piekļuvei.</p>
+            <div class="summary-line"><span>Paka</span><strong id="summaryPlan">Pro paka</strong></div>
+            <div class="summary-line"><span>Maksājums</span><strong>Vienreizējs</strong></div>
+            <div class="summary-line"><span>Kopā</span><strong class="summary-total" id="summaryPrice">€89</strong></div>
+          </aside>
+
+          <form name="ai-kurss-pirkums" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true#order">
+            <input type="hidden" name="form-name" value="ai-kurss-pirkums" />
+            <input type="hidden" name="izveleta_paka" id="selectedPlan" value="Pro paka" />
+            <input type="hidden" name="cena" id="selectedPrice" value="89" />
+            <p style="display:none"><label>Neaizpildīt: <input name="bot-field" /></label></p>
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Vārds</label>
+                <input id="name" name="vards" type="text" placeholder="Tavs vārds" required />
+              </div>
+              <div class="field">
+                <label for="email">E-pasts</label>
+                <input id="email" name="epasts" type="email" placeholder="tu@email.lv" required />
+              </div>
+              <div class="field">
+                <label for="phone">Telefons / Telegram</label>
+                <input id="phone" name="kontakts" type="text" placeholder="+371... vai @username" />
+              </div>
+              <div class="field">
+                <label for="package">Kursa paka</label>
+                <select id="package" name="paka" required>
+                  <option value="Pro paka" data-price="89">Pro paka — €89</option>
+                  <option value="Starta paka" data-price="49">Starta paka — €49</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="payment">Vēlamais maksājuma veids</label>
+                <select id="payment" name="maksajuma_veids" required>
+                  <option>Bankas pārskaitījums</option>
+                  <option>Kartes maksājuma saite</option>
+                  <option>Individuāli saskaņot</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="message">Komentārs</label>
+                <textarea id="message" name="komentars" placeholder="Piemēram: gribu piekļuvi šodien, interesē biznesa piemēri..."></textarea>
+              </div>
+            </div>
+            <button class="btn btn-accent btn-block" type="submit" style="margin-top:16px">Nosūtīt pirkuma pieteikumu</button>
+            <p class="fine" id="successText" hidden>Pieteikums nosūtīts. Pārbaudi Netlify Forms paneli, ja vietne jau ir publicēta.</p>
+            <p class="fine">Nospiežot pogu, tu nosūti pieteikumu kursa iegādei. Šī forma nepieslēdz automātisku maksājumu bez maksājumu servisa integrācijas.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">FAQ</div>
+            <h2>Biežākie jautājumi</h2>
+          </div>
+        </div>
+        <div class="faq">
+          <details open>
+            <summary>Vai vajag tehniskas zināšanas?</summary>
+            <p>Nē. Kurss ir veidots iesācējiem un cilvēkiem, kuri grib praktisku rezultātu bez programmēšanas.</p>
+          </details>
+          <details>
+            <summary>Vai kursā tiek minēti oficiāli AI zīmoli?</summary>
+            <p>Nē. Teksti ir uzrakstīti neitrāli: “AI asistents”, “AI rīks”, “mākslīgais intelekts”. Tu vari pielāgot nosaukumus vēlāk, ja tas būs vajadzīgs.</p>
+          </details>
+          <details>
+            <summary>Vai varu šo lapu uzreiz likt Netlify?</summary>
+            <p>Jā. Tā ir viena HTML lapa ar iebūvētu dizainu un vienkāršu Netlify formu. Augšupielādē failu vai ZIP un publicē.</p>
+          </details>
+          <details>
+            <summary>Kā pieslēgt reālu maksājumu?</summary>
+            <p>Vienkāršākais variants: pievienot maksājuma saiti pogai vai pēc formas nosūtīšanas manuāli izsūtīt rēķinu/kartes maksājuma linku.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> AI Kurss. Visi materiāli ir paredzēti praktiskai apmācībai.</span>
+      <span>Bez oficiālu AI zīmolu nosaukumiem.</span>
+    </div>
+  </footer>
+
+  <div class="float-cta"><a class="btn btn-primary btn-block" href="#order">Pirkt kursu</a></div>
+
+  <script>
+    const planText = document.getElementById('summaryPlan');
+    const priceText = document.getElementById('summaryPrice');
+    const selectedPlan = document.getElementById('selectedPlan');
+    const selectedPrice = document.getElementById('selectedPrice');
+    const packageSelect = document.getElementById('package');
+    const successText = document.getElementById('successText');
+
+    function setPlan(plan, price){
+      planText.textContent = plan;
+      priceText.textContent = '€' + price;
+      selectedPlan.value = plan;
+      selectedPrice.value = price;
+      [...packageSelect.options].forEach((option, index) => {
+        if(option.value === plan) packageSelect.selectedIndex = index;
+      });
+    }
+
+    document.querySelectorAll('.choose-plan').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setPlan(btn.dataset.plan, btn.dataset.price);
+        document.getElementById('order').scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    packageSelect.addEventListener('change', () => {
+      const option = packageSelect.options[packageSelect.selectedIndex];
+      setPlan(option.value, option.dataset.price);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    if(new URLSearchParams(window.location.search).get('success') === 'true'){
+      successText.hidden = false;
+    }
+  </script>
+</body>
+</html>
